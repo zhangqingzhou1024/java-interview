@@ -8,10 +8,10 @@ package com.interview.basic.jvm.classloader;
 public class Hello {
 
     static {
-        System.out.println("hello world!");
+        System.out.println("static med --> hello world!");
     }
 
-    public static void sayHello(){
+    public static void sayHello() {
         System.out.println("Hello,I am ....");
     }
 }

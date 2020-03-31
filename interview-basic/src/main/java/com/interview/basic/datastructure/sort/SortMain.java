@@ -133,7 +133,6 @@ public class SortMain {
                 arr[left] = arr[right];
             }
 
-
             // ---左指针开始移动---
             while (left < right && arr[left] < pivot) {
                 left++;
@@ -147,7 +146,6 @@ public class SortMain {
             if (left >= right) {
                 arr[left] = pivot;
             }
-
         }
 
         // 分而治之

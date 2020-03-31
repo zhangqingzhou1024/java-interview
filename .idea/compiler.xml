@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="interview-lecode" />
+        <module name="interview-dubbo" />
         <module name="interview-basic" />
         <module name="interview-spring" />
         <module name="interview-mabatis" />

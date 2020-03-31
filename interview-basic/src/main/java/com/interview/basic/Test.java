@@ -1,5 +1,8 @@
 package com.interview.basic;
 
+import com.interview.basic.datastructure.collection.concurrent.ConCurrentHashMapStart;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -11,5 +14,12 @@ public class Test {
     public static void main(String[] args) {
 
         System.out.println("111111");
+
+        ConCurrentHashMapStart conCurrentHashMapStart = new ConCurrentHashMapStart();
+
+        ArrayList<Object> objects = new ArrayList<>();
+
+
+        objects.hashCode();
     }
 }

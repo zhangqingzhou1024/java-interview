@@ -34,7 +34,8 @@ public class NoDepNumArrSum {
         } else if (n == 2) {
             return Math.max(arr[0], arr[1]);
 
-        } else {  int A = arr[n - 1] + rec_sum(arr, n - 2);
+        } else {
+            int A = arr[n - 1] + rec_sum(arr, n - 2);
             int B = rec_sum(arr, n - 1);
 
 
