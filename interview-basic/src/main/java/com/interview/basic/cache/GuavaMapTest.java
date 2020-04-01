@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @date 2020-04-01 22:05
  */
-public class TestGuavaMap {
+public class GuavaMapTest {
 
     /**
      * 初始化 本地Map
