@@ -5,6 +5,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -32,10 +33,10 @@ public class ConcurrentLruMap<K, V> {
      *
      * @param minExpiresInSecond 最小时间
      * @param maxExpiresInSecond 最大时间
-     * @param maximumSize        最大容量
      * @param initSize           初识容量
+     * @param maximumSize        最大容量
      */
-    public ConcurrentLruMap(int minExpiresInSecond, int maxExpiresInSecond, long maximumSize, int initSize) {
+    public ConcurrentLruMap(int minExpiresInSecond, int maxExpiresInSecond, int initSize, long maximumSize) {
         cacheMap = CacheBuilder.newBuilder()
                 .initialCapacity(initSize)
                 .maximumSize(maximumSize)
@@ -115,7 +116,7 @@ public class ConcurrentLruMap<K, V> {
      * @param key key
      * @return CachedValue<V>
      */
-    public CachedValue<V> get(K key) {
+    private CachedValue<V> get(K key) {
         if (key == null) {
             return null;
         }
@@ -192,4 +193,43 @@ public class ConcurrentLruMap<K, V> {
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
     }
+
+    /**
+     * 对value的一个封装
+     *
+     * @param <V>
+     */
+    private class CachedValue<V> {
+        private V value;
+        private long initTime;
+
+        private int timeout;
+
+        public CachedValue(V value) {
+            this.value = value;
+        }
+
+        CachedValue(V value, int timeout, long initTime) {
+            this.value = value;
+            this.timeout = timeout;
+            this.initTime = initTime;
+        }
+
+        public V getValue() {
+            return value;
+        }
+
+        void setValue(V value) {
+            this.value = value;
+        }
+
+        long getInitTime() {
+            return initTime;
+        }
+
+        int getTimeout() {
+            return timeout;
+        }
+    }
+
 }
