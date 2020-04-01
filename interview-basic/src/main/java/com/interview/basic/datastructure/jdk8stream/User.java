@@ -37,5 +37,4 @@ public class User {
      * 备注
      */
     private String remark;
-
 }
