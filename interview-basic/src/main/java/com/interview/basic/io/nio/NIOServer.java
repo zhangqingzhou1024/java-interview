@@ -37,10 +37,8 @@ public class NIOServer {
                     if (serverSelector.select(1) > 0) {
                         Set<SelectionKey> set = serverSelector.selectedKeys();
                         Iterator<SelectionKey> keyIterator = set.iterator();
-
                         while (keyIterator.hasNext()) {
                             SelectionKey key = keyIterator.next();
-
                             if (key.isAcceptable()) {
                                 try {
                                     // (1) 每来一个新连接，不需要创建一个线程，而是直接注册到clientSelector
