@@ -1,0 +1,29 @@
+		$gt：   	>
+        $gte： 		>=
+        $eq:        =
+        $ne:        !=
+        $lt:        <
+        $lte:        <=
+        $in:        in(后面的值为bson对象数组)
+        		BasicDBList values = new BasicDBList();
+			    values.add(13);
+			    values.add(47);
+			    queryCondition.put("age", new BasicDBObject("$in", values));
+
+        $nin:        not in(后面的值为bson对象数组)
+        $regex       正则表达式
+        $or
+        		 BasicDBList values = new BasicDBList();
+				    values.add(new BasicDBObject("agender", "female"));
+				    values.add(new BasicDBObject("age", new BasicDBObject("$lte", 23)));
+				    queryCondition.put("$or", values);
+
+
+        使用方法：
+         Map<String, Object> dataMap =      new HashMap<String, Object>();
+
+        // 方式一
+        Map<String, Object> regMap =      new HashMap<String, Object>();
+        regMap.put("$regex", "add");
+        dataMap.put("name", regMap);
+	    BasicDBObject whereDoc =  new BasicDBObject(dataMap);
