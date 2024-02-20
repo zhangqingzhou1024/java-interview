@@ -3,10 +3,14 @@ package com.interview.basic.thread.aqs.concurrent;
 import java.util.concurrent.*;
 
 /**
- * CountDownLatchTest
+ * CountDownLatchTest 底层AQS
  * 倒计时器
  * <p>
  * 当前线程等待其他线程执行，等其他线程执行完成后，本线程（一个）才执行
+ * 比如王者荣耀 需要等着5人才能开始
+ * 跑到8人
+ *
+ * 大任务 拆小任务，等小任务都完成后进行汇总
  *
  * @author zqz
  * @version 1.0

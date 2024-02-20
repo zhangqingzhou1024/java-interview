@@ -32,6 +32,35 @@ import java.util.concurrent.Semaphore;
  *             }
  *         }
  *
+ * private void doReleaseShared() {
+ *         *
+ *          * Ensure that a release propagates, even if there are other
+ *          * in-progress acquires/releases.  This proceeds in the usual
+ *          * way of trying to unparkSuccessor of head if it needs
+ *          * signal. But if it does not, status is set to PROPAGATE to
+ *          * ensure that upon release, propagation continues.
+ *          * Additionally, we must loop in case a new node is added
+ *          * while we are doing this. Also, unlike other uses of
+ *          * unparkSuccessor, we need to know if CAS to reset status
+ *          * fails, if so rechecking.
+ *          *
+ *for(;;){
+         *Node h=head;
+         *if(h!=null&&h!=tail){
+         *int ws=h.waitStatus;
+         *if(ws==Node.SIGNAL){
+         *if(!compareAndSetWaitStatus(h,Node.SIGNAL,0))
+         *continue;            // loop to recheck cases
+         *unparkSuccessor(h);
+         *}
+         *else if(ws==0&&
+         *!compareAndSetWaitStatus(h,0,Node.PROPAGATE))
+         *continue;                // loop on failed CAS
+         *}
+         *if(h==head)                   // loop if head changed
+         *break;
+         *}
+         *}
  *
  * @author zqz
  * @date 2024-02-18 21:09
@@ -39,7 +68,7 @@ import java.util.concurrent.Semaphore;
 public class SemaphoreTest {
     public static void main(String[] args) {
 
-        Semaphore windows = new Semaphore(5);
+        Semaphore windows = new Semaphore(2);
 
         int threadNum = 10;
 
@@ -52,7 +81,7 @@ public class SemaphoreTest {
                         windows.acquire();
                         System.out.println(Thread.currentThread().getName() + ": 开始买票");
                         // 模拟业务场景
-                        Thread.sleep(3000L);
+                        Thread.sleep(10000L);
                         System.out.println(Thread.currentThread().getName() + ": 买票成功！");
                     } catch (InterruptedException e) {
                         e.printStackTrace();
