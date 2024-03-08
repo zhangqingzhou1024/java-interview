@@ -138,6 +138,7 @@ class Thing {
         this.serialNum = serialNum;
         this.volume = volume;
         this.value = value;
+        System.out.println();
     }
 
     public int getSerialNum() {

@@ -1,4 +1,4 @@
-package com.interview.basic.datastructure.concurrent.thread.productAndConsumer;
+package com.interview.basic.thread.thread.productAndConsumer;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

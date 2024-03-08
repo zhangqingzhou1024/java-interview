@@ -1,7 +1,7 @@
 package com.interview.basic.thread.create;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @date 2020-03-30 10:29
  */
-public class FutureTask implements Callable {
+public class MyFutureTask implements Callable {
 
     @Override
     public Object call() throws Exception {
@@ -18,7 +18,7 @@ public class FutureTask implements Callable {
     }
 
     public static void main(String[] args) throws Exception {
-        java.util.concurrent.FutureTask futureTask = new java.util.concurrent.FutureTask<>(new FutureTask());
+        FutureTask futureTask = new FutureTask<>(new MyFutureTask());
 
         Thread thread = new Thread(futureTask);
         thread.start();

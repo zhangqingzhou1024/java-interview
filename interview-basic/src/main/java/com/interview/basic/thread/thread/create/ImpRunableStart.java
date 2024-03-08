@@ -1,4 +1,4 @@
-package com.interview.basic.datastructure.concurrent.thread.create;
+package com.interview.basic.thread.thread.create;
 
 /**
  * @author zqz
