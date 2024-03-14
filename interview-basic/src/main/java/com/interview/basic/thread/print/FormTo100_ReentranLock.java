@@ -45,7 +45,6 @@ public class FormTo100_ReentranLock {
                         while (atomicInteger.get() <= 100) {
                             if (atomicInteger.get() % 2 == 0) {
                                 conditionB.await();
-                                ;
                             }
                             System.out.println("b=>" + atomicInteger.getAndIncrement());
                             conditionA.signalAll();

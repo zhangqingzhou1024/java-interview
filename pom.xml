@@ -71,6 +71,7 @@
         <module>interview-dubbo</module>
         <module>asm</module>
         <module>dynamic-proxy</module>
+        <module>my-spring</module>
     </modules>
 
 
