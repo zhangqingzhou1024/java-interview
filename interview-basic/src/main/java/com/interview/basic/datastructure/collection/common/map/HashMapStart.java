@@ -1,5 +1,7 @@
 package com.interview.basic.datastructure.collection.common.map;
 
+import com.interview.basic.thread.aqs.concurrent.ConCurrentHashMapStart;
+
 import java.util.HashMap;
 
 /**
@@ -16,5 +18,7 @@ public class HashMapStart {
         hashMap.put("test","test");
 
         hashMap.remove("222");
+
+        new ConCurrentHashMapStart();
     }
 }

@@ -11,15 +11,16 @@ public class SortMain {
 
     public static void main(String[] args) {
 
-        Integer[] arr = {8, 5, 3, 3, 2, 4, 9};
+        Integer[] arr = {8, 5, 3, 3, 2, 4, 9, -1};
         // 冒泡排序
-         bubbleSort(arr);
+        //bubbleSort(arr);
+        bubbleSort2(arr);
         // 选择
         //selectSort(arr);
         // 插入
         // insertSort(arr);
         // 快排
-        // quickSort(arr, 0, arr.length - 1);
+        //  quickSort(arr, 0, arr.length - 1);
 
 
         System.out.println(Joiner.on(",").join(arr));
@@ -73,9 +74,34 @@ public class SortMain {
         }
     }
 
+    private static void bubbleSort2(Integer[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            // 大的右移动, 内层的每次找出最大的元素 放到最右边
+            for (int j = 0; j < arr.length - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    // 交换
+                    int temp = arr[j + 1];
+                    arr[j + 1] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+
+    }
+
     /**
      * 说明：将i前面的数据看成一个排好的队列，
      * i后面的看成一个无序队列。每次只需要找无需的最小值，做替换
+     * <p>
+     * 冒泡排序和选择排序是两种不同的排序算法，它们在本质上并不相同。冒泡排序是一种简单的排序算法，
+     * 它通过比较相邻的元素并交换它们的位置来对数组进行排序。而选择排序是一种排序算法，它通过选择数组中的最小值
+     * （升序排序）或最大值（降序排序）并将其放置在正确的位置来对数组进行排序。
+     * <p>
+     * 冒泡排序和选择排序之间的主要区别在于它们的实现方式和性能。冒泡排序在每次比较时都会进行交换操作，
+     * 而选择排序只在每次迭代结束后进行一次交换操作。因此，选择排序通常比冒泡排序执行更少的交换操作，
+     * 因此在实际应用中，选择排序通常比冒泡排序更快更高效。
+     * <p>
+     * 总的来说，虽然冒泡排序和选择排序都属于O(n^2)的时间复杂度，但它们在实际应用中有不同的性能表现，选择排序通常更快更高效。
      *
      * @param arr 排序数组
      */
@@ -104,52 +130,90 @@ public class SortMain {
     /**
      * 快速排序
      *
-     * @param arr
-     * @param low
-     * @param high
+     * @param arr   原始数组
+     * @param left  左
+     * @param right 右指针
      */
-    private static void quickSort(Integer[] arr, int low, int high) {
-        // 高低位指针相遇
-        if (low >= high) {
+    private static void quickSort(Integer[] arr, int left, int right) {
+        // 高低位指针相遇，表示只剩一个元素
+        if (left >= right) {
             return;
         }
+        // 分而治之
+        int pivot = partition(arr, left, right);
+        // 小堆
+        quickSort(arr, left, pivot - 1);
+        // 大堆
+        quickSort(arr, pivot + 1, right);
+    }
 
-        // 左指针
-        int left = low;
-        // 右指针
-        int right = high;
-
-        // 标志位
+    /**
+     * 1、分区
+     * 2、返回 pivot位置
+     */
+    private static int partition(Integer[] arr, int left, int right) {
+        // 基点
         int pivot = arr[left];
 
         while (left < right) {
-            // ---右指针开始移动---
-            // 如果右指针对应的值大于标志值，那么继续向左移动指针
-            while (left < right & arr[right] >= pivot) {
+            // 处理右侧，发现小的放左边,如果right不移动，则表明右侧的都小于temp,则也进行
+            while (left < right && arr[right] >= pivot) {
                 right--;
             }
-            // 碰见右侧值小于标志值的，要停止指针移动，并把当前值复制到标志位上
-            if (left < right) {
-                arr[left] = arr[right];
-            }
+            arr[left] = arr[right];
 
-            // ---左指针开始移动---
-            while (left < right && arr[left] < pivot) {
+            // 处理右侧，发现大的放右边
+            while (left < right && arr[left] <= pivot) {
                 left++;
             }
-            // 停止本次左指针移动
-            if (left < right) {
-                arr[right] = arr[left];
-            }
+            arr[right] = arr[left];
+        }
+        // 放入中间值，此时 left = right
+        arr[left] = pivot;
+        return left;
+    }
 
-            // 停止移动标志
-            if (left >= right) {
-                arr[left] = pivot;
+    public static void mergeSort(int[] arr, int start, int end) {
+        //判断拆分的不为最小单位
+        if (start <= end) {
+            //再一次拆分，知道拆成一个一个的数据
+            mergeSort(arr, start, (start + end) / 2);
+            mergeSort(arr, (start + end) / 2 + 1, end);
+            //记录开始/结束位置
+            int left = start;
+            int right = (start + end) / 2 + 1;
+            //记录每个小单位的排序结果
+            int index = 0;
+            int[] result = new int[end - start + 1];
+            //如果查分后的两块数据，都还存在
+            while (left <= (start + end) / 2 && right <= end) {
+                //比较两块数据的大小，然后赋值，并且移动下标
+                if (arr[left] <= arr[right]) {
+                    result[index] = arr[left];
+                    left++;
+                } else {
+                    result[index] = arr[right];
+                    right++;
+                }
+                //移动单位记录的下标
+                index++;
+            }
+            //当某一块数据不存在了时
+            while (left <= (start + end) / 2 || right <= end) {
+                //直接赋值到记录下标
+                if (left <= (start + end) / 2) {
+                    result[index] = arr[left];
+                    left++;
+                } else {
+                    result[index] = arr[right];
+                    right++;
+                }
+                index++;
+            }
+            //最后将新的数据赋值给原来的列表，并且是对应分块后的下标。
+            for (int i = start; i <= end; i++) {
+                arr[i] = result[i - start];
             }
         }
-
-        // 分而治之
-        quickSort(arr, low, right - 1);
-        quickSort(arr, right + 1, right);
     }
 }
